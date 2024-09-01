@@ -31,7 +31,7 @@ export class CoffeesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
+  update(@Param('id') id: string) {
     return `This action updates #${id} coffee`;
   }
 
