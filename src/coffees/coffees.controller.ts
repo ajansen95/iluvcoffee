@@ -23,8 +23,8 @@ export class CoffeesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    const coffee = this.coffeeService.findOne(id);
+  findOne(@Param('id') id: number) {
+    const coffee = this.coffeeService.findOne('' + id);
     if (!coffee) {
       throw new NotFoundException(`Coffee #${id} not found`);
     }
