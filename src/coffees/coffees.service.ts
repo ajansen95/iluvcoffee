@@ -22,6 +22,7 @@ export class CoffeesService {
 
   create(createCoffeeDto: any) {
     this.coffees.push(createCoffeeDto);
+    return createCoffeeDto;
   }
 
   update(id: string, updateCoffeeDto: any) {
@@ -29,6 +30,7 @@ export class CoffeesService {
     if (existingCoffee) {
       // update the existing entity
     }
+    return updateCoffeeDto;
   }
 
   remove(id: string) {
