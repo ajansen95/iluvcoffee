@@ -24,11 +24,6 @@ export class CoffeesController {
     return this.coffeeService.findOne(id);
   }
 
-  @Get('flavors')
-  findAllFlavors() {
-    return 'This action returns all coffees flavors';
-  }
-
   @Post()
   create(@Body() body) {
     return this.coffeeService.create(body);
