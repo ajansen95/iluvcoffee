@@ -15,7 +15,6 @@ export class ApiKeyGuard implements CanActivate {
             IS_PUBLIC_KEY,
             context.getHandler(),
         );
-        console.log(isPublic);
         if (isPublic) {
             return true;
         }
