@@ -5,35 +5,35 @@ import { WrapResponseInterceptor } from './common/interceptors/wrap-response/wra
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    app.useGlobalPipes(
-        new ValidationPipe({
-            whitelist: true,
-            transform: true,
-            forbidNonWhitelisted: true,
-            transformOptions: {
-                enableImplicitConversion: true,
-            },
-        }),
-    );
-    app.useGlobalInterceptors(
-        new WrapResponseInterceptor(),
-        // new TimeoutInterceptor(),
-    );
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
+  app.useGlobalInterceptors(
+    new WrapResponseInterceptor(),
+    // new TimeoutInterceptor(),
+  );
 
-    // Setting up Swagger document
-    const options = new DocumentBuilder()
-        .setTitle('Iluvcoffee')
-        .setDescription('Coffee application')
-        .setVersion('1.0')
-        .build();
+  // Setting up Swagger document
+  const options = new DocumentBuilder()
+    .setTitle('Iluvcoffee')
+    .setDescription('Coffee application')
+    .setVersion('1.0')
+    .build();
 
-    const document = SwaggerModule.createDocument(app, options);
+  const document = SwaggerModule.createDocument(app, options);
 
-    SwaggerModule.setup('api', app, document, {
-        jsonDocumentUrl: 'openapi.json',
-    });
+  SwaggerModule.setup('api', app, document, {
+    jsonDocumentUrl: 'openapi.json',
+  });
 
-    await app.listen(3000);
+  await app.listen(3000);
 }
 bootstrap();

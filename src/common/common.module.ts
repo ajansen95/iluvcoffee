@@ -4,10 +4,10 @@ import { ApiKeyGuard } from './guards/api-key/api-key.guard';
 import { LoggingMiddleware } from './middleware/logging/logging.middleware';
 
 @Module({
-    providers: [{ provide: APP_GUARD, useClass: ApiKeyGuard }],
+  providers: [{ provide: APP_GUARD, useClass: ApiKeyGuard }],
 })
 export class CommonModule implements NestModule {
-    configure(consumer: MiddlewareConsumer): any {
-        consumer.apply(LoggingMiddleware).forRoutes('*');
-    }
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggingMiddleware).forRoutes('*');
+  }
 }
