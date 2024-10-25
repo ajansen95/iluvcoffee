@@ -55,72 +55,52 @@ describe('[Feature] Coffees - /coffees', () => {
     httpServer = app.getHttpServer();
   });
 
-  it('Create [POST /]', () => {
-    return request(httpServer)
+  it('Create [POST /]', async () => {
+    const { body } = await request(httpServer)
       .post('/coffees')
       .send(coffee as CreateCoffeeDto)
-      .expect(HttpStatus.CREATED)
-      .then(({ body }) => {
-        expect(body).toEqual(expectedPartialCoffee);
-      });
+      .expect(HttpStatus.CREATED);
+    expect(body).toEqual(expectedPartialCoffee);
   });
 
-  it('Create [POST /]', () => {
-    return request(httpServer)
+  it('Create [POST /]', async () => {
+    const { body } = await request(httpServer)
       .post('/coffees')
       .send(coffee as CreateCoffeeDto)
-      .expect(HttpStatus.CREATED)
-      .then(({ body }) => {
-        expect(body).toEqual(expectedPartialCoffee);
-      });
+      .expect(HttpStatus.CREATED);
+    expect(body).toEqual(expectedPartialCoffee);
   });
 
-  it('Get all [GET /]', () => {
-    return request(httpServer)
-      .get('/coffees')
-      .then(({ body }) => {
-        console.log(body);
-        expect(body.length).toBeGreaterThan(0);
-        expect(body[0]).toEqual(expectedPartialCoffee);
-      });
+  it('Get all [GET /]', async () => {
+    const { body } = await request(httpServer).get('/coffees');
+    console.log(body);
+    expect(body.length).toBeGreaterThan(0);
+    expect(body[0]).toEqual(expectedPartialCoffee);
   });
 
-  it('Get one [GET /:id]', () => {
-    return request(httpServer)
-      .get('/coffees/1')
-      .then(({ body }) => {
-        expect(body).toEqual(expectedPartialCoffee);
-      });
+  it('Get one [GET /:id]', async () => {
+    const { body } = await request(httpServer).get('/coffees/1');
+    expect(body).toEqual(expectedPartialCoffee);
   });
 
-  it('Update one [PATCH /:id]', () => {
+  it('Update one [PATCH /:id]', async () => {
     const updateCoffeeDto: UpdateCoffeeDto = {
       ...coffee,
       name: 'New and Improved Shipwreck Roast',
     };
-    return request(httpServer)
+    const { body } = await request(httpServer)
       .patch('/coffees/1')
-      .send(updateCoffeeDto)
-      .then(({ body }) => {
-        expect(body.name).toEqual(updateCoffeeDto.name);
-
-        return request(httpServer)
-          .get('/coffees/1')
-          .then(({ body }) => {
-            expect(body.name).toEqual(updateCoffeeDto.name);
-          });
-      });
+      .send(updateCoffeeDto);
+    expect(body.name).toEqual(updateCoffeeDto.name);
+    const { body: body_1 } = await request(httpServer).get('/coffees/1');
+    expect(body_1.name).toEqual(updateCoffeeDto.name);
   });
 
-  it('Delete one [DELETE /:id]', () => {
-    return request(httpServer)
-      .delete('/coffees/1')
-      .expect(HttpStatus.OK)
-      .then(() => {
-        return request(httpServer)
-          .get('/coffees/1')
-          .expect(HttpStatus.NOT_FOUND);
-      });
+  it('Delete one [DELETE /:id]', async () => {
+    await request(httpServer).delete('/coffees/1').expect(HttpStatus.OK);
+    return await request(httpServer)
+      .get('/coffees/1')
+      .expect(HttpStatus.NOT_FOUND);
   });
 
   afterAll(async () => {
